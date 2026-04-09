@@ -4,11 +4,11 @@
  * sub to sparkcodez
  */
 const { Client, Intents, MessageEmbed } = require("discord.js");
-const nuker = new Client({ intents: Object.values(Intents.FLAGS).reduce((a, b) => a + b) });
+const coinfilpper = new Client({ intents: Object.values(Intents.FLAGS).reduce((a, b) => a + b) });
 const { red, greenBright, cyan, yellow } = require("chalk");
 const { token, prefix, userID, disableEveryone } = require("../config/config.json")
 
-nuker.on("ready", () => {
+coinfilpper.on("ready", () => {
     console.clear();
     console.log(red(`
     
@@ -23,34 +23,25 @@ nuker.on("ready", () => {
                                             
                                                       
                             Beta
-                    Nuker: ${nuker.user.tag}
+                    coinfilpper: ${coinfilpper.user.tag}
                     Prefix: ${prefix}
     `))
-    nuker.user.setActivity({ name: "Playing with spark", type: "PLAYING" });
+    coinfilpper.user.setActivity({ name: "Playing with spark", type: "PLAYING" });
 });
 
-nuker.on("messageCreate", (message) => {
+coinfilpper.on("messageCreate", (message) => {
 
     // Help Embed
     const help = new MessageEmbed()
         .setDescription(`**Presser Beta ;**
-    \n**mass channels ;**
     ${prefix}mc [amount] (text) i.e \`${prefix}mc 5 test\`\n
-    **mass channel n ping ;**
     ${prefix}cp [amount] (text), {message} i.e \`${prefix}cp 5 test, testing\`\n
-    **mass roles ;**
     ${prefix}mr [amount] (text) i.e \`${prefix}mr 5 test\`\n
-    **delete channels ;**
     ${prefix}dc\n
-    **delete roles ;**
     ${prefix}dr\n
-    **delete emotes ;**
     ${prefix}de\n
-    **delete stickers (new) ;**
     ${prefix}ds\n
-    **mass kick ;**
     ${prefix}mk\n
-    **mass ban ;**
     ${prefix}mb
     `)
         .setFooter(`© Presser Beta`)
@@ -78,63 +69,61 @@ nuker.on("messageCreate", (message) => {
             message.channel.send({embeds: [help]})
         }
 
-        // Mass Channels
         if (message.content.startsWith(prefix + "mc")) {
             MassChannels(args1, args2).catch((err) => {
                 message.reply(err);
             });
         }
 
-        // Delete all channels
+      
         if (message.content.startsWith(prefix + "dc")) {
             DelAllChannels().catch((err) => {
                 message.reply(err);
             });
         }
 
-        // Mass Channels and Ping
+   
         if (message.content.startsWith(prefix + "cp")) {
             MassChnPing(args1, args2, args3).catch((err) => {
                 message.reply(err);
             });
         }
 
-        // Mass Roles
         if (message.content.startsWith(prefix + "mr")) {
             MassRoles(args1, args2).catch((err) => {
                 message.reply(err);
             });
         }
 
-        // Delete all Roles
+    
         if (message.content.startsWith(prefix + "dr")) {
             DelAllRoles().catch((err) => {
                 message.reply(err);
             });
         }
 
-        // Delete all Stickers
+    
         if (message.content.startsWith(prefix + "ds")) {
             DelAllStickers().catch((err) => {
                 message.reply(err);
             });
         }
 
-        // Delete all Emotes
+      
         if (message.content.startsWith(prefix + "de")) {
             DelAllEmotes().catch((err) => {
                 message.reply(err);
             });
         }
 
-        // Mass Ban
+      
         if (message.content.startsWith(prefix + "mb")) {
             BanAll().catch((err) => {
                 message.reply(err);
             });
         }
 
-        // Mass Kick
+   
         if (message.content.startsWith(prefix + "mk")) {
             KickAll().catch((err) => {
                 message.reply(err);
@@ -149,7 +138,7 @@ nuker.on("messageCreate", (message) => {
             message.channel.send({embeds: [help]})
         }
 
-        // Mass Channels
+      
         if (message.content.startsWith(prefix + "mc")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             MassChannels(args1, args2).catch((err) => {
@@ -157,7 +146,6 @@ nuker.on("messageCreate", (message) => {
             });
         }
 
-        // Delete all channels
         if (message.content.startsWith(prefix + "dc")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             DelAllChannels().catch((err) => {
@@ -165,7 +153,7 @@ nuker.on("messageCreate", (message) => {
             });
         }
 
-        // Mass Channels and Ping
+      
         if (message.content.startsWith(prefix + "cp")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             MassChnPing(args1, args2, args3).catch((err) => {
@@ -173,7 +161,7 @@ nuker.on("messageCreate", (message) => {
             });
         }
 
-        // Mass Roles
+    
         if (message.content.startsWith(prefix + "mr")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             MassRoles(args1, args2).catch((err) => {
@@ -181,7 +169,7 @@ nuker.on("messageCreate", (message) => {
             });
         }
 
-        // Delete all Roles
+    
         if (message.content.startsWith(prefix + "dr")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             DelAllRoles().catch((err) => {
@@ -189,7 +177,6 @@ nuker.on("messageCreate", (message) => {
             });
         }
 
-        // Delete all Stickers
         if (message.content.startsWith(prefix + "ds")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             DelAllStickers().catch((err) => {
@@ -197,7 +184,6 @@ nuker.on("messageCreate", (message) => {
             });
         }
 
-        // Delete all Emotes
         if (message.content.startsWith(prefix + "de")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             DelAllEmotes().catch((err) => {
@@ -205,7 +191,6 @@ nuker.on("messageCreate", (message) => {
             });
         }
 
-        // Mass Ban
         if (message.content.startsWith(prefix + "mb")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             BanAll().catch((err) => {
@@ -213,7 +198,6 @@ nuker.on("messageCreate", (message) => {
             });
         }
 
-        // Mass Kick
         if (message.content.startsWith(prefix + "mk")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             KickAll().catch((err) => {
@@ -222,12 +206,9 @@ nuker.on("messageCreate", (message) => {
         }
     }
 
-    // Nuking Functions
+
 
     /**
-     * Excessive amount of channels
-     * @param {number} amount Amount of channels to mass create
-     * @param {string} channelName Name of channel
      */
     function MassChannels(amount, channelName) {
         return new Promise((resolve, reject) => {
@@ -248,10 +229,6 @@ nuker.on("messageCreate", (message) => {
     }
 
     /**
-     * Excessive amount of channels and mentions
-     * @param {number} amount Amount of channels to mass create
-     * @param {string} channelName Name of channel
-     * @param {string} pingMessage Message to be sent when everyone is mentioned
      */
     function MassChnPing(amount, channelName, pingMessage) {
         return new Promise((resolve, reject) => {
@@ -281,7 +258,6 @@ nuker.on("messageCreate", (message) => {
     }
 
     /**
-     * Deletes all channels in a guild
      */
     function DelAllChannels() {
         return new Promise((resolve, reject) => {
@@ -290,11 +266,6 @@ nuker.on("messageCreate", (message) => {
             resolve();
         });
     }
-
-    /**
-     * Excessive amount of roles
-     * @param {number} amount Amount of roles
-     * @param {string} roleName Role name
      */
     function MassRoles(amount, roleName) {
         return new Promise((resolve, reject) => {
@@ -313,7 +284,6 @@ nuker.on("messageCreate", (message) => {
     }
 
     /**
-     * Deletes all roles
      */
     function DelAllRoles() {
         return new Promise((resolve, reject) => {
@@ -323,7 +293,6 @@ nuker.on("messageCreate", (message) => {
     }
 
     /**
-     * Deletes all emotes
      */
     function DelAllEmotes() {
         return new Promise((resolve, reject) => {
@@ -333,7 +302,6 @@ nuker.on("messageCreate", (message) => {
     }
 
     /**
-     * Deletes all stickers
      */
     function DelAllStickers() {
         return new Promise((resolve, reject) => {
@@ -343,7 +311,6 @@ nuker.on("messageCreate", (message) => {
     }
 
     /**
-     * Ban all guild Members
      */
     function BanAll() {
         return new Promise((resolve, reject) => {
@@ -363,7 +330,6 @@ nuker.on("messageCreate", (message) => {
     }
 
     /**
-     * Kick all guild Members
      */
     function KickAll() {
         return new Promise((resolve, reject) => {
@@ -384,7 +350,7 @@ nuker.on("messageCreate", (message) => {
 });
 
 try {
-    nuker.login(token);
+    coinfilpper.login(token);
 } catch (err) {
     console.error(err)
 }
