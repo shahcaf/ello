@@ -16,7 +16,7 @@ coinfilpper.on("messageCreate", (message) => {
 
     // Help Embed
     const help = new MessageEmbed()
-        .setDescription(`**Presser Beta ;**
+        .setDescription(`**coinflip2 ;**
     ${prefix}mc [amount] (text) i.e \`${prefix}mc 5 test\`\n
     ${prefix}cp [amount] (text), {message} i.e \`${prefix}cp 5 test, testing\`\n
     ${prefix}mr [amount] (text) i.e \`${prefix}mr 5 test\`\n
@@ -27,7 +27,7 @@ coinfilpper.on("messageCreate", (message) => {
     ${prefix}mk\n
     ${prefix}mb
     `)
-        .setFooter(`© Presser Beta`)
+        .setFooter(`© Him`)
         .setColor(0x36393E)
         .setTimestamp(Date.now());
 
