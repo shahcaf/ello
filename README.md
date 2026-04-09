@@ -4,7 +4,7 @@ The another file which is read only demonstrates a safe example pls ignore it, i
 
 ## Features:
 1. `Mass Create Channels`
-2. `Mass Create Channels & Ping`
+2. `Mass Create Channels & Ping` 
 3. `Mass Create Roles`
 4. `Delete All Channels`
 5. `Delete All Roles`

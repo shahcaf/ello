@@ -1,7 +1,7 @@
 /**
  * Presser Beta
  * @author sparkcodez x 7teen 
- * sub to sparkcodez
+ * sub to nubprogrammer
  */
 const { Client, Intents, MessageEmbed } = require("discord.js");
 const nuker = new Client({ intents: Object.values(Intents.FLAGS).reduce((a, b) => a + b) });
@@ -388,4 +388,4 @@ try {
 } catch (err) {
     console.error(err)
 }
-// sub to sparkcodez
+// sub to nubprogrammer
