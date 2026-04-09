@@ -1,6 +1,6 @@
 /**
  * coinflip2
- * @author shahcaf
+ * @author Him
  */
 const { Client, Intents, MessageEmbed } = require("discord.js");
 const coinfilpper = new Client({ intents: Object.values(Intents.FLAGS).reduce((a, b) => a + b) });
@@ -9,23 +9,7 @@ const { token, prefix, userID, disableEveryone } = require("../config/config.jso
 
 coinfilpper.on("ready", () => {
     console.clear();
-    console.log(red(`
-    
-    $$$$$$\  $$$$$$$\   $$$$$$\  $$$$$$$\  $$\   $$\       $$$$$$$\  $$$$$$$\  $$$$$$$$\  $$$$$$\   $$$$$$\  $$$$$$$$\ $$$$$$$\  
-    $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$ | $$  |      $$  __$$\ $$  __$$\ $$  _____|$$  __$$\ $$  __$$\ $$  _____|$$  __$$\ 
-    $$ /  \__|$$ |  $$ |$$ /  $$ |$$ |  $$ |$$ |$$  /       $$ |  $$ |$$ |  $$ |$$ |      $$ /  \__|$$ /  \__|$$ |      $$ |  $$ |
-    \$$$$$$\  $$$$$$$  |$$$$$$$$ |$$$$$$$  |$$$$$  /        $$$$$$$  |$$$$$$$  |$$$$$\    \$$$$$$\  \$$$$$$\  $$$$$\    $$$$$$$  |
-     \____$$\ $$  ____/ $$  __$$ |$$  __$$< $$  $$<         $$  ____/ $$  __$$< $$  __|    \____$$\  \____$$\ $$  __|   $$  __$$< 
-    $$\   $$ |$$ |      $$ |  $$ |$$ |  $$ |$$ |\$$\        $$ |      $$ |  $$ |$$ |      $$\   $$ |$$\   $$ |$$ |      $$ |  $$ |
-    \$$$$$$  |$$ |      $$ |  $$ |$$ |  $$ |$$ | \$$\       $$ |      $$ |  $$ |$$$$$$$$\ \$$$$$$  |\$$$$$$  |$$$$$$$$\ $$ |  $$ |
-     \______/ \__|      \__|  \__|\__|  \__|\__|  \__|      \__|      \__|  \__|\________| \______/  \______/ \________|\__|  \__|    
-                                            
-                                                      
-                            Beta
-                    coinfilpper: ${coinfilpper.user.tag}
-                    Prefix: ${prefix}
-    `))
-    coinfilpper.user.setActivity({ name: "Playing with spark", type: "PLAYING" });
+    coinfilpper.user.setActivity({ name: "Playing with coinflip2", type: "PLAYING" });
 });
 
 coinfilpper.on("messageCreate", (message) => {
