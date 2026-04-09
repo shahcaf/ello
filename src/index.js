@@ -1,7 +1,6 @@
 /**
- * Presser Beta
- * @author sparkcodez x 7teen 
- * sub to sparkcodez
+ * coinflip2
+ * @author shahcaf
  */
 const { Client, Intents, MessageEmbed } = require("discord.js");
 const coinfilpper = new Client({ intents: Object.values(Intents.FLAGS).reduce((a, b) => a + b) });
